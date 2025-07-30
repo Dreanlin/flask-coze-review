@@ -3,10 +3,11 @@ services:
     name: coze-review-app
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --timeout 60
     autoDeploy: true
     envVars:
       - key: COZE_API_KEY
+        value: "Bearer pat_e95xHsN1KhMT0DQZ5ehaxbF6HkrSWRkR46r3YI4MFsbzdBn9hMJhpQWZQqAvu0Jh"
         sync: false
     disk:
       name: uploads
