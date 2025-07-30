@@ -181,7 +181,7 @@ def generate_review_html(input_md_path: str):
 
                         请你帮我完成以下任务：
                         1. 针对我的翻译并结合我的注释和原文高亮，生成【批改意见】，包括【短语讲解】、【句法语法分析】、【原文表达是否/为什么更优秀/地道】等，直接加在对应的每段原文之后，你的回答以【中文+带高亮英文原文+批改意见】的顺序排布！原文本的内容不要省略，【我的注释】可以不写入了，直接融入【批改意见】中就行；
-                        2. 生成的回复以一个简单清晰的markdown格式呈现，方便我直接导出或复习。模板为下面的内容，请完全按照这个模式做批改：
+                        2. 生成的回复以一个简单清晰的markdown格式呈现，方便我直接导出或复习。模板为下面的内容，请完全按照这个模式做批改，包括【空行换行符】、【---分页符】：
                                 \n\n
                             ---
                             ### 段落 1
@@ -192,7 +192,7 @@ def generate_review_html(input_md_path: str):
                                 \n\n
                             **原文**：One of my earliest memories of Dad is that he would often leave the house at dawn **to** **go** jogging.
                                 \n\n
-                            【批改意见】
+                            #### 批改意见
                                 \n\n
                             - **短语讲解**：“memories of”比“memories about”更常用和地道，“of”在这里表示所属关系，强调记忆与父亲的关联性更强。“leave the house”比“leave home”表述更具体生动，“house”明确指出是居住的房子这一具体地点；“to go jogging”比“and go jogging”更能清晰地表达“离家”的目的，“to”在这里表目的，使句子逻辑更连贯。
                                 \n\n
