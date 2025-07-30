@@ -73,7 +73,7 @@ def md_to_html(input_path: str):
 """
 
 
-def coze_query(prompt: str, content: str, max_wait=40, interval=5) -> str:
+def coze_query(prompt: str, content: str, max_wait=6, interval=20) -> str:
     url = 'https://api.coze.cn/v3/chat'
     data = {
         "bot_id": COZE_BOT_ID,

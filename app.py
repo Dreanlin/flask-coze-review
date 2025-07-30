@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
+import threading  # 👈 加这个
 
 # 调用批改函数
 from coze_review import generate_review_html
@@ -29,20 +30,26 @@ def upload():
     with open(md_filepath, 'w', encoding='utf-8') as f:
         f.write(content)
 
-    try:
-        html_content = generate_review_html(md_filepath)
-        html_filename = safe_filename.rsplit('.', 1)[0] + '.html'
-        html_filepath = os.path.join(UPLOAD_DIR, html_filename)
-        with open(html_filepath, 'w', encoding='utf-8') as f:
-            f.write(html_content)
+    # 👇 在后台线程中异步生成 HTML
+    def generate_html():
+        try:
+            html_content = generate_review_html(md_filepath)
+            html_filename = safe_filename.rsplit('.', 1)[0] + '.html'
+            html_filepath = os.path.join(UPLOAD_DIR, html_filename)
+            with open(html_filepath, 'w', encoding='utf-8') as f:
+                f.write(html_content)
+            print(f"[✔] 成功生成：{html_filename}")
+        except Exception as e:
+            print(f"[✘] HTML 生成失败：{e}")
 
-        return jsonify({
-            'status': 'ok',
-            'md_file': safe_filename,
-            'html_file': html_filename
-        })
-    except Exception as e:
-        return jsonify({'status': 'error', 'error': str(e)}), 500
+    threading.Thread(target=generate_html).start()
+
+    # 👇 马上返回响应
+    return jsonify({
+        'status': 'processing',
+        'message': '报告正在后台生成，请稍后访问 HTML 页面',
+        'html_url': f"/files/{safe_filename.rsplit('.', 1)[0]}.html"
+    }), 202
 
 @app.route('/files')
 def list_files():
@@ -51,8 +58,11 @@ def list_files():
 @app.route('/files/<fname>')
 def get_file(fname):
     safe_fname = "".join(c for c in fname if c.isalnum() or c in ('_', '-', '.'))
-    with open(os.path.join(UPLOAD_DIR, safe_fname), encoding='utf-8') as f:
-        return f.read(), 200, {'Content-Type': 'text/markdown; charset=utf-8'}
+    filepath = os.path.join(UPLOAD_DIR, safe_fname)
+    if not os.path.exists(filepath):
+        return '文件不存在或还未生成', 404
+    with open(filepath, encoding='utf-8') as f:
+        return f.read(), 200, {'Content-Type': 'text/html; charset=utf-8'}
 
 if __name__ == '__main__':
     app.run()
