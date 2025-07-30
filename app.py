@@ -51,9 +51,19 @@ def upload():
         'html_url': f"/files/{safe_filename.rsplit('.', 1)[0]}.html"
     }), 202
 
+# @app.route('/files')
+# def list_files():
+#     return jsonify(os.listdir(UPLOAD_DIR))
+
 @app.route('/files')
 def list_files():
-    return jsonify(os.listdir(UPLOAD_DIR))
+    files = [f for f in os.listdir(UPLOAD_DIR) if f.endswith('.html')]
+    html = "<h2>生成的报告列表</h2><ul>"
+    for f in files:
+        url = f"/files/{f}"
+        html += f'<li><a href="{url}" target="_blank">{f}</a></li>'
+    html += "</ul>"
+    return html
 
 @app.route('/files/<fname>')
 def get_file(fname):
