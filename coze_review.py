@@ -202,7 +202,7 @@ def generate_review_html(input_md_path: str):
                             - **句法语法分析**：你的翻译和原文在整体句子结构上都是主系表结构。“One of my earliest memories...”是主语，“is”是系动词，“that...”引导的表语从句作表语。在语法上都正确，但原文在连接词和短语使用上更胜一筹。
                                 <br>
                             - **原文表达是否/为什么更优秀/地道**：原文表达更优秀地道。首先用词上“memories of”“leave the house”“to go jogging”比你的表述更常用和精准；其次在句子连贯性上，“to go jogging”更清晰表达了离家的目的，比“and go jogging”更符合英语表达习惯。  
-                                <br>
+
                         下面是我的 翻译练习 的具体内容：
                             '''
 
