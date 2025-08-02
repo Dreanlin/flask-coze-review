@@ -73,7 +73,7 @@ def md_to_html(input_path: str):
 """
 
 
-def coze_query(prompt: str, content: str, max_wait=4, interval=20) -> str:
+def coze_query(prompt: str, content: str, max_wait=4, interval=15) -> str:
     url = 'https://api.coze.cn/v3/chat'
     data = {
         "bot_id": COZE_BOT_ID,
@@ -208,7 +208,7 @@ def generate_review_html(input_md_path: str):
 
     with open(md_output_path, 'w', encoding='utf-8') as f:
         print("📋 正在生成总评...")
-        summary = coze_query(overview_prompt, input_markdown)
+        summary = coze_query(overview_prompt, input_markdown, interval=30)
         f.write(summary + '\n\n## 分段批改\n\n')
 
         print("📋 分段批改中...")
