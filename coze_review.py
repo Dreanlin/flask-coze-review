@@ -73,7 +73,7 @@ def md_to_html(input_path: str):
 """
 
 
-def coze_query(prompt: str, content: str, max_wait=4, interval=15) -> str:
+def coze_query(prompt: str, content: str, max_wait=6, interval=15) -> str:
     url = 'https://api.coze.cn/v3/chat'
     data = {
         "bot_id": COZE_BOT_ID,
@@ -214,6 +214,7 @@ def generate_review_html(input_md_path: str):
         print("📋 分段批改中...")
         for i, para in enumerate(input_markdown.split('---'), 1):
             print(f"🧩 处理段落 {i}...")
+            print(para.strip())
             if(para!=""):
                 result = coze_query(review_prompt, para.strip())
                 if result.strip():
