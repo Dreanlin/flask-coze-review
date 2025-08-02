@@ -214,8 +214,9 @@ def generate_review_html(input_md_path: str):
         print("📋 分段批改中...")
         for i, para in enumerate(input_markdown.split('---'), 1):
             print(f"🧩 处理段落 {i}...")
-            result = coze_query(review_prompt, para.strip())
-            if result.strip():
-                f.write(f"\n\n{result}")
+            if(para!=""):
+                result = coze_query(review_prompt, para.strip())
+                if result.strip():
+                    f.write(f"\n\n{result}")
 
     return md_to_html(md_output_path)
