@@ -73,7 +73,7 @@ def md_to_html(input_path: str):
 """
 
 
-def coze_query(prompt: str, content: str, max_wait=6, interval=25) -> str:
+def coze_query(prompt: str, content: str, max_wait=4, interval=20) -> str:
     url = 'https://api.coze.cn/v3/chat'
     data = {
         "bot_id": COZE_BOT_ID,
@@ -174,9 +174,9 @@ def generate_review_html(input_md_path: str):
                                 ## 📚 重点造句练习
                                 (挑出最优质的、不超过5个、可练习点即可) 】
 
-                                下面是我的 `.md` 内容：'''
+                                下面是我的 翻译练习 的具体内容：'''
     review_prompt = '''
-                        以下是我刚完成的英语翻译练习，内容包含：
+                        最后是我刚完成的英语翻译练习，内容包含：
                         - 中文原文
                         - 我的翻译
                         - 英文参考原文；我手动用 `**...**` 高亮了我觉得难或不确定的英文单词或短语，或者自己觉得需要借鉴的内容
@@ -203,7 +203,7 @@ def generate_review_html(input_md_path: str):
                                 <br>
                             - **原文表达是否/为什么更优秀/地道**：原文表达更优秀地道。首先用词上“memories of”“leave the house”“to go jogging”比你的表述更常用和精准；其次在句子连贯性上，“to go jogging”更清晰表达了离家的目的，比“and go jogging”更符合英语表达习惯。  
                                 <br>
-                            
+                        下面是我的 翻译练习 的具体内容：
                             '''
 
     with open(md_output_path, 'w', encoding='utf-8') as f:
